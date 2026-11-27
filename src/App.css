@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@theme {
+    --font-title: "Cinzel Decorative", serif;
+    --font-body: "Outfit", sans-serif;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

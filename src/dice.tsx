@@ -1,6 +1,14 @@
 import icon from './icons.tsx';
 import { useState, useEffect } from 'react';
 
+
+const DiceProp : string = `
+h-60 w-50
+text-8xl
+text-white
+justify-center items-center 
+flex flex-col`
+
 const dice = [
     {
         icon: icon.dice1,
@@ -28,20 +36,14 @@ const dice = [
     }
 ];
 
-function RandomNumber() {
-    const number = Math.floor(Math.random() * 6);
+function Animation({randomNumber}: {randomNumber: () => number}) {
 
-    return number;
-}
-
-function Animation() {
-
-    const [value, setValue] = useState(RandomNumber);
+    const [value, setValue] = useState(randomNumber());
 
     useEffect(() => {
 
         const interval = setInterval(() => {
-            setValue(RandomNumber());
+            setValue(randomNumber());
         }, 100);
 
         return () => clearInterval(interval);
@@ -49,7 +51,7 @@ function Animation() {
     }, []);
 
     return (
-        <div className="bg-blue-500 justify-center items-center flex flex-col">
+        <div className={DiceProp}>
             {dice[value].icon}
             {dice[value].value}
         </div>
@@ -57,17 +59,26 @@ function Animation() {
    
 }
 
-function Result () {
-
-    const [value, setValue] = useState(RandomNumber);
+function Dice({number}: {number: number}) {
 
     return (
-        <div className="bg-blue-500 justify-center items-center flex flex-col">
-            {dice[value].icon}
-            {dice[value].value}
+        <div className = {DiceProp}>
+            {dice[number].icon}
+            {dice[number].value}
         </div>
-        
     )
+}
+
+function Result ({loading, randomNumber, number}: {loading: boolean, randomNumber: () => number, number: number}) {
+
+    if (loading) {
+        return <Animation randomNumber={randomNumber} />;
+
+    } else {
+        return <Dice number={number} />
+    }
+
+    
 }
 
 export {Result, Animation};

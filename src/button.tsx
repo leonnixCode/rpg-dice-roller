@@ -6,8 +6,8 @@ const ButtonProps = {
   text-white font-bold 
   px-8 py-4 rounded-xl 
   transition-colors
-  hover:bg-purple-400
-  m-2`,
+  hover:bg-purple-400 cursor-pointer m-2
+  active:scale-90  active:bg-purple-900`,
 
   loading: `bg-violet-800 
   text-white font-bold 
@@ -18,34 +18,30 @@ const ButtonProps = {
 
 }
 
-function Default() {
+function Default({ startLoading }: { startLoading: () => void }) {
   return (
-    <div>
-      <button className={ButtonProps.default}>
-         {icon.dice} Roll Dice
-      </button>
-    </div>
+    <button style={{ fontFamily: "Cinzel" }} className={ButtonProps.default} onClick={startLoading}>
+        {icon.dice} Roll Dice
+    </button>
   )
 }
 
 function Loading() {
   return (
-    <div>
-      <button className={ButtonProps.loading}>
-         {icon.spinner} Rolling Dice...
-      </button>
-    </div>
+    <button style={{ fontFamily: "Cinzel" }} className={ButtonProps.loading}>
+        {icon.spinner} Rolling Dice...
+    </button>
   )
 }
 
-function Button() {
-    return (
-        <div className="bg-red-500 justify-center items-center flex flex-col">
-            <Default/>
-            <Loading />
-        </div>
+function Button({loading, startLoading}: {loading: boolean, startLoading: () => void}) {
+  
+  if (loading) {
+    return <Loading />
+  } else {
+    return <Default startLoading={startLoading} />
+  }
 
-    )
 }
 
 export default Button
